@@ -4,13 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homework 9</title>
-    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
-    <ul>
-      <li><a href="01-color-switcher.html">Color switcher</a></li>
-      <li><a href="02-timer.html">Countdown timer</a></li>
-      <li><a href="03-promises.html">Promise generator</a></li>
-    </ul>
+    <div class="wrap">
+      <form class="search-form" id="search-form">
+        <input type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
+        <button class="btn-submit" type="submit"></button>
+      </form>
+    </div>
+
+    <div class="gallery">
+      <!-- <div class="photo-card">
+                <div class="photo">
+                  <a href="${item.largeImageURL}">
+                    <img
+                      class="gallery__image"
+                      src="${item.webformatURL}"
+                      alt="${item.tags}"
+                      loading="lazy"
+                    />
+                  </a>
+                </div>
+                <div class="info">
+                  <p class="info-item"><b>Likes</b> ${item.likes}</p>
+                  <p class="info-item"><b>Views</b> ${item.views}</p>
+                  <p class="info-item"><b>Comments</b> ${item.comments}</p>
+                  <p class="info-item"><b>Downloads</b> ${item.downloads}</p>
+                </div>
+              </div> -->
+    </div>
+
+    <button type="button" class="load-more">Load more</button>
+    <script src="js/index.js" type="module"></script>
   </body>
 </html>
