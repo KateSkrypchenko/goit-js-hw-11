@@ -5,6 +5,9 @@ export class SearchApiService {
     this.searchQuery = '';
     this.page = 1;
     this.par_page = 40;
+    this.totalHits = 0;
+    this.isLoading = false;
+    this.shouldLoad = true;
   }
 
   async fetchSearchQuery() {

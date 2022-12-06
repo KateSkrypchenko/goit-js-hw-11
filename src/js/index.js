@@ -1,8 +1,8 @@
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import throttle from 'lodash.throttle';
 
 import { SearchApiService } from './fetchSearchQuery';
 import { renderGalleryCardItems } from './cardTempletes';
@@ -22,8 +22,11 @@ const gallery = new SimpleLightbox('.gallery a', {
 
 const searchApiService = new SearchApiService();
 const notify = new NotifyMessage();
+const THROTTLE_DELAY = 300;
 
 refs.form.addEventListener('submit', onSubmitForm);
+window.addEventListener('scroll', throttle(checkPosition, THROTTLE_DELAY));
+window.addEventListener('resize', throttle(checkPosition, THROTTLE_DELAY));
 
 AOS.init();
 
@@ -32,6 +35,7 @@ function onSubmitForm(event) {
   event.preventDefault();
   refs.gallery.innerHTML = '';
   searchApiService.query = event.currentTarget.elements.searchQuery.value.trim();
+  searchApiService.totalHits = 0;
   if (!searchApiService.query) {
     return;
   }
@@ -40,8 +44,6 @@ function onSubmitForm(event) {
 }
 
 function response(response) {
-  console.log(response.totalHits);
-  console.log(searchApiService.par_page);
   if (searchApiService.page - 1 === 1 && response.totalHits !== 0) {
     notify.success(response.totalHits);
   }
@@ -78,12 +80,13 @@ function onClickLoadButton() {
   searchApiService.fetchSearchQuery().then(response).catch(reject);
 }
 
-// function onScrollGallery(event) {
-//   const scroll = document.documentElement.getBoundingClientRect();
-
-//   if (scroll.bottom < document.documentElement.clientHeight + 100) {
-//     searchApiService.fetchSearchQuery().then(response).catch(reject);
-//   }
-// }
-
-// window.addEventListener('scroll', onScrollGallery);
+async function checkPosition() {
+  const height = document.body.offsetHeight;
+  const screenHeight = window.innerHeight;
+  const scrolled = window.scrollY;
+  const threshold = height - screenHeight / 4;
+  const position = scrolled + screenHeight;
+  if (position >= threshold) {
+    await searchApiService.fetchSearchQuery().then(response).catch(reject);
+  }
+}
