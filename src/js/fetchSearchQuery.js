@@ -13,6 +13,7 @@ export default class SearchApiService {
       const URL = `https://pixabay.com/api/?key=${KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
       const response = await axios.get(URL);
       this.incrementPage();
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);

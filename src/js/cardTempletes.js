@@ -1,7 +1,7 @@
 export function renderGalleryCardItems(items) {
   return items.hits
     .map(item => {
-      return `<div class="photo-card">
+      return `<div class="photo-card" data-aos="fade-up">
                 <div class="photo">
                   <a href="${item.largeImageURL}">
                     <img
