@@ -26,7 +26,7 @@ const THROTTLE_DELAY = 300;
 
 refs.form.addEventListener('submit', onSubmitForm);
 window.addEventListener('scroll', throttle(checkPosition, THROTTLE_DELAY));
-window.addEventListener('resize', throttle(checkPosition, THROTTLE_DELAY));
+// window.addEventListener('resize', throttle(checkPosition, THROTTLE_DELAY));
 
 AOS.init();
 
