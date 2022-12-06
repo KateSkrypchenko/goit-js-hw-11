@@ -3,7 +3,6 @@ import SearchApiService from './fetchSearchQuery';
 import { renderGalleryCardItems } from './cardTempletes';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -16,7 +15,8 @@ const refs = {
   photoCard: document.querySelector('.photo-card'),
 };
 
-let gallery = new SimpleLightbox('.gallery a', {
+let gal = new SimpleLightbox('.gallery', {
+  captions: true,
   captionsData: 'alt',
   captionDelay: 250,
 });
@@ -34,7 +34,7 @@ function onSubmitForm(event) {
   if (!searchApiService.query) {
     return;
   }
-  gallery.refresh();
+  gal.refresh();
   searchApiService.resetPage();
   searchApiService.fetchSearchQuery().then(response).catch(reject);
   // console.log(searchApiService.fetchSearchQuery().then(response).catch(reject));

@@ -4,13 +4,14 @@ export default class SearchApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
+    this.par_page = 40;
   }
 
   async fetchSearchQuery() {
     try {
-      console.log(this);
+      // console.log(this);
       const KEY = '31749564-17a32f2ca24bf9158a5d3e6cb';
-      const URL = `https://pixabay.com/api/?key=${KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
+      const URL = `https://pixabay.com/api/?key=${KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.par_page}&page=${this.page}`;
       const response = await axios.get(URL);
       this.incrementPage();
       // console.log(response.data);
