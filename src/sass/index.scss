@@ -118,20 +118,24 @@ input {
   background-color: #f9f0da;
 }
 
-.load-more {
-  display: none;
-  margin: 0 auto;
-  width: 200px;
-  height: 45px;
-  border: none;
-  background-color: #7ba7ab;
-  color: #4f4f4f;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 250ms linear;
+// .load-more {
+//   display: block;
+//   margin: 0 auto;
+//   width: 200px;
+//   height: 45px;
+//   border: none;
+//   background-color: #7ba7ab;
+//   color: #4f4f4f;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   transition: background-color 250ms linear;
 
-  &:hover,
-  &:focus {
-    background-color: #739598;
-  }
-}
+//   &:hover,
+//   &:focus {
+//     background-color: #739598;
+//   }
+// }
+
+// .hidden {
+//   display: none;
+// }

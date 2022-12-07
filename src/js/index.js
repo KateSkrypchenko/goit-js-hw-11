@@ -26,21 +26,25 @@ const THROTTLE_DELAY = 300;
 
 refs.form.addEventListener('submit', onSubmitForm);
 window.addEventListener('scroll', throttle(checkPosition, THROTTLE_DELAY));
-window.addEventListener('resize', throttle(checkPosition, THROTTLE_DELAY));
 
 AOS.init();
 
-function onSubmitForm(event) {
-  refs.btnLoad.style.display = 'none';
-  event.preventDefault();
-  refs.gallery.innerHTML = '';
-  searchApiService.query = event.currentTarget.elements.searchQuery.value.trim();
-  searchApiService.totalHits = 0;
-  if (!searchApiService.query) {
-    return;
+async function onSubmitForm(event) {
+  try {
+    //  refs.btnLoad.classList.add('hidden')
+    event.preventDefault();
+    refs.gallery.innerHTML = '';
+    searchApiService.query = event.currentTarget.searchQuery.value.trim();
+    searchApiService.totalHits = 0;
+    if (!searchApiService.query) {
+      return;
+    }
+    searchApiService.resetPage();
+    const fetch = await searchApiService.fetchSearchQuery();
+    response(fetch);
+  } catch (error) {
+    reject();
   }
-  searchApiService.resetPage();
-  searchApiService.fetchSearchQuery().then(response).catch(reject);
 }
 
 function response(response) {
@@ -51,13 +55,13 @@ function response(response) {
     reject();
   } else if (response.hits.length === 0) {
     notify.info();
-    refs.btnLoad.style.display = 'none';
+    // refs.btnLoad.classList.add('hidden')
   } else if (response.totalHits <= searchApiService.par_page) {
     createGalleryCardList(response);
     notify.info();
   } else {
     createGalleryCardList(response);
-    activationButton();
+    // activationButton();
   }
 }
 
@@ -71,14 +75,19 @@ function createGalleryCardList(items) {
   gallery.refresh();
 }
 
-function activationButton() {
-  refs.btnLoad.style.display = 'block';
-  refs.btnLoad.addEventListener('click', onClickLoadButton);
-}
+// function activationButton() {
+//   refs.btnLoad.classList.remove('hidden')
+//   refs.btnLoad.addEventListener('click', onClickLoadButton);
+// }
 
-function onClickLoadButton() {
-  searchApiService.fetchSearchQuery().then(response).catch(reject);
-}
+// async function onClickLoadButton() {
+//   try {
+//     const fetch = await searchApiService.fetchSearchQuery();
+//     response(fetch);
+//   } catch (error) {
+//     reject();
+//   }
+// }
 
 async function checkPosition() {
   const height = document.body.offsetHeight;
